@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Search Results for "{{ keyword }}"</h1>
+        
+    </header>
+    <a href="/" class="search-again-button">Search Again</a>
+
+    <!-- Reddit Section -->
+    {% if "reddit" in sites %}
+        <section class="container">
+        <h1>Here are your returned reddit quotes:</h1>
+        {% if reddit_quotes %}
+            <div class="quotes-list">
+                {% for quote in reddit_quotes %}
+                    <div class="quote">
+                        <p>"{{ quote }}"</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No relevant comments found for {{ keyword }}.</p>
+        {% endif %}
+    {% endif %}
+
+
+    <!-- Stack Overflow Posts -->
+    {% if "stack_overflow" in sites %}
+        {% if stack_overflow_posts %}
+        <h2>Stack Overflow Posts</h2>
+        <div class="quotes-list">
+                {% for post in stack_overflow_posts %}
+                    <div class="quote">
+                        <p class="post-title"><strong>Article: {{ post["post_title"]|trim }}</strong></p>
+                        <!-- <p>{{ post["excerpt"] }}</p> -->
+                        <a href="{{ post['post_url'] }}" target="_blank">View StackOverflow Post</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No relevant Stack Overflow posts found for "{{ keyword }}".</p>
+        {% endif %}
+    {% endif %}
+
+
+        <!-- Hackernews Posts -->
+    {% if "stack_overflow" in sites %}
+        {% if fetch_hackernews_posts %}
+        <h2>Hackernews Articles</h2>
+        <div class="quotes-list">
+            {% for post in fetch_hackernews_posts %}
+                <div class="quote">
+                    <p class="post-title"><strong>{{ post["title"]|trim }}</strong></p>
+                    <!-- <p>{{ post["excerpt"] }}</p> -->
+                    <a href="{{ post['url'] }}" target="_blank">View Hackernews article</a>
+                </div>
+            {% endfor %}
+        </div>
+       {% else %}
+           <p>No relevant Hackernews posts found for "{{ keyword }}".</p>
+       {% endif %}
+    {% endif %}
+
+        <a href="/" class="search-again-button">Search Again</a>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    margin: 0% 1% 0% 1%;
+
+}
+
+body {
+    background-color: #003135;
+    color: #afdde5; 
+    line-height: 1.6;
+    /* height: 100vh;   */
+}
+
+h2 {
+    text-decoration: underline;
+    font-size: 40px;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    align-items: center;  
+    /* min-height: 100vh; */
+
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    background: rgba(18, 18, 18, 0.9);
+    backdrop-filter: blur(8px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #00aaff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+}
+
+
+/* Button */
+.search-again-button {
+    padding: 10px 20px;
+    background: #afdde5;
+    color: #964734;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    border-radius: 20px;
+    margin: 20px auto;
+
+}
+
+.search-again-button:hover {
+    transform: scale(1.1);
+    color: #964734;
+}
+
+/* Quotes */
+.quote {
+    background-color: #024950; /* Light green with transparency */
+    border-radius: 12px;  
+    padding: 15px;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+    font-size: 16px; 
+    color: #afdde5;  
+    line-height: 1.5;  /* Improve readability */
+    width: 80%;
+    max-width: 1000px;  
+    margin: 20px auto 20px auto;
+    border: solid 5px #964734;
+    text-decoration: none;
+}
+
+a { color: inherit; } 
+
+a:hover {
+    color: #afdde5
+}
+
+.p {
+    margin: 0;
+}
+
+.post-title {
+    margin: 0px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+#keyword {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.input-search {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+    margin-left: none;
+}
+
+.input-search input {
+    width: 50%; 
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#search-form p{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

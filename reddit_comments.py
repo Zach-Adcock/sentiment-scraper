@@ -24,9 +24,9 @@ def google_search(keyword):
 
     url_base = "https://www.googleapis.com/customsearch/v1"
     response = requests.get(url_base, params=params)
-    res = response.json()
+    results = response.json()
 
-    return res
+    return results
 
 
 def urls_and_ids(res_list):
@@ -35,21 +35,25 @@ def urls_and_ids(res_list):
     Returns a list of lists with the urls and reddit link IDs
     '''
     url_list = []   # list of lists [post_url, post_id]
-    for page in res_list['items']:
-        if page['link'] and 'comments' in page['link']:
-            # Get reddit post ID from the URL
-            url = page['link']
-            start_ind = url.find("comments/") + 9   # 8 is len of "comments/"
-            end_ind = url.find("/", start_ind)
-            reddit_post_id = url[start_ind:end_ind]
-            # print("reddit_post_id: ", reddit_post_id)
+    try:
+        for page in res_list['items']:
+            if page['link'] and 'comments' in page['link']:
+                # Get reddit post ID from the URL
+                url = page['link']
+                start_ind = url.find("comments/") + 9   # 8 is len of "comments/"
+                end_ind = url.find("/", start_ind)
+                reddit_post_id = url[start_ind:end_ind]
+                # print("reddit_post_id: ", reddit_post_id)
 
-            url_list.append([url, reddit_post_id])
-        elif page['link']:
-            url_list.append([page['link'], ""])
+                url_list.append([url, reddit_post_id])
+            elif page['link']:
+                url_list.append([page['link'], ""])
 
-        else:
-            continue
+            else:
+                continue
+
+    except KeyError:
+        print("No Results Found for this keyword")
     return url_list
 
 
@@ -69,6 +73,9 @@ def get_reddit_comments(keyword):
     reddit_comments = []
 
     for reddit_submission in reddit_urls:
-        reddit_comments_from_submission(reddit_submission[1], reddit_comments)
+        reddit_comments_from_submission(reddit_submission[1], reddit_comments, keyword)
 
-    return reddit_comments
+    if reddit_comments:
+        return reddit_comments
+    else:
+        return ["No relevant results found for this keyword"]

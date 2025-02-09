@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1 href="">Search for a keyword to return relevant quotes from the internet</h1>
+    </header>
+
+    <!-- Form -->
+    <section class="container">
+        <form action="/search" method="POST" id="search-form">
+            <section class="input-search">
+                <label for="keyword">Enter Keyword:</label>
+                <input type="text" id="keyword" name="keyword" required placeholder="Keyword">
+            </section>
+            
+            
+
+            <p>Select websites to pull quotes from:</p>
+            <label>
+                <input type="checkbox" name="sites" value="reddit"> Reddit
+            </label>
+            <label>
+                <input type="checkbox" name="sites" value="stack_overflow"> Stack Overflow
+            </label>
+            <label>
+                <input type="checkbox" name="sites" value="hackernews"> Hackernews
+            </label>
+            
+            <button type="submit">Search</button>
+        </form>
+    </section>
+
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            const checkboxes = document.querySelectorAll('input[name="sites"]:checked');
+            if (checkboxes.length === 0) {
+                alert('Please select at least one site to search.');
+                event.preventDefault();  // Prevent form submission
+            }
+        });
+    </script>
+</body>
+</html>
