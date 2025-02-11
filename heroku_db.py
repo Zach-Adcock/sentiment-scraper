@@ -3,7 +3,7 @@ import psycopg2
 
 
 def connect_heroku_db():
-    DATABASE_URL = os.getenv("HEROKU_DATABASE_URL", "")
+    DATABASE_URL = os.getenv("HEROKU_DATABASE_URL")
     connection = psycopg2.connect(DATABASE_URL, sslmode="require")
     cursor = connection.cursor()
     
