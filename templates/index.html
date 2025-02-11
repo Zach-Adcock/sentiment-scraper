@@ -36,17 +36,29 @@
                 <input type="checkbox" name="sites" value="hackernews"> Hackernews
             </label>
             
-            <button type="submit">Search</button>
+            <button class="search-button" type="submit">Search</button>
         </form>
+
+        <!-- Loading wheel -->
+        <div class="loading-container" id="loading">
+            <div class="spinner"></div>
+            <p>Loading search results...</p>
+        </div>
     </section>
 
+
+    
     <script>
         document.getElementById('search-form').addEventListener('submit', function(event) {
             const checkboxes = document.querySelectorAll('input[name="sites"]:checked');
             if (checkboxes.length === 0) {
                 alert('Please select at least one site to search.');
                 event.preventDefault();  // Prevent form submission
+                return
             }
+
+            // Reveal loading wheel upon search
+            document.getElementById('loading').style.display = 'block';
         });
     </script>
 </body>

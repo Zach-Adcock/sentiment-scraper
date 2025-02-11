@@ -1,6 +1,5 @@
 import requests
 import time
-import pprint
 from html import unescape
 
 
@@ -43,8 +42,8 @@ def fetch_stackoverflow_posts(keyword):
                 #         answer_bodies.append(answer["body"])
 
                 posts.append({
-                    "post_title": unescape(post_title),
-                    "post_url": post_url
+                    "title": unescape(post_title),
+                    "url": post_url
                 })
         except KeyError:
             print("No results found")

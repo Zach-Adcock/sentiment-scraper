@@ -54,15 +54,16 @@ def urls_and_ids(res_list):
 
     except KeyError:
         print("No Results Found for this keyword")
+        
     return url_list
 
 
-def reddit_comments_from_submission(reddit_submission_id, reddit_comments, keyword):
+def reddit_comments_from_submission(reddit_submission_id, reddit_submission_url, reddit_comments, keyword):
     submission = reddit.submission(reddit_submission_id)
     submission.comments.replace_more(limit=0)
     for top_level_comment in submission.comments:
         if keyword.lower() in top_level_comment.body or keyword.upper() in top_level_comment.body:
-            reddit_comments.append(top_level_comment.body)
+            reddit_comments.append({'comment': top_level_comment.body, "url": reddit_submission_url})
     
     return reddit_comments
 
@@ -73,7 +74,7 @@ def get_reddit_comments(keyword):
     reddit_comments = []
 
     for reddit_submission in reddit_urls:
-        reddit_comments_from_submission(reddit_submission[1], reddit_comments, keyword)
+        reddit_comments_from_submission(reddit_submission[1], reddit_submission[0], reddit_comments, keyword)
 
     if reddit_comments:
         return reddit_comments

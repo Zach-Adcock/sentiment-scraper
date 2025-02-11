@@ -1,7 +1,6 @@
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
-import pprint
 
 
 load_dotenv()
@@ -10,12 +9,12 @@ client = OpenAI(
 )
 
 
-def filter_comments(comment_list, keyword):
-    filtered_comments = []
+def filter_titles(post_list, keyword, site):
+    filtered_posts = []
 
-    prompt_prefix = f"""The following is a
-    Reddit comment. Return "True"
-    if the comment provides an opinion or sentiment 
+    prompt_prefix = f"""The following is an article
+    from the website: {site}. Return "True"
+    if the title includes an opinion or sentiment 
     (either positive or negative) about {keyword}.
     If the comment does not include the {keyword}, or
     does not imply an opinion about {keyword} return
@@ -23,15 +22,15 @@ def filter_comments(comment_list, keyword):
     the "True" comments are opinionated.
     """
 
-    for comment in comment_list:
-        prompt = prompt_prefix + comment
+    for post in post_list:
+        prompt = prompt_prefix + post['title']
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             temperature=0,
             messages=[
                 {
                     "role": "system",
-                    "content": f"You will read comments from Reddit users and filter out all comments that do not express any sentiment about {keyword}."
+                    "content": f"You will read article and post titles from {site} website and filter out all titles that do not express any sentiment about {keyword}."
                 },
                 {
                     "role": "user",
@@ -39,44 +38,8 @@ def filter_comments(comment_list, keyword):
                 }
             ]
         )
-        opinionated_comment = response.choices[0].message.content.lower()
-        if opinionated_comment == "true":
-            # cleaned_comment = ' '.join(comment.splitlines()).strip()
-            filtered_comments.append(comment)
+        opinionated_post = response.choices[0].message.content.lower()
+        if opinionated_post == "true":
+            filtered_posts.append(post)
 
-    return filtered_comments
-
-
-# def filter_comments(comment_list, keyword):
-#     formatted_comments = "\n".join([f"{i+1}: {comment}" for i, comment in enumerate(comment_list)])
-
-#     filtered_comments = []
-
-#     prompt = f"""The following is a list of
-#     Reddit comments. Return a list containing only
-#     the comments that provide a sentiment 
-#     (positive, negative, or neutral) on {keyword}.\n"""
-
-#     prompt += formatted_comments
-
-#     print(prompt)
-
-#     response = client.chat.completions.create(
-#         model="gpt-3.5-turbo",
-#         temperature=0,
-#         messages=[
-#             {
-#                 "role": "system",
-#                 "content": f"You will read comments from Reddit users and filter out all comments that do not express any sentiment about {keyword}."
-#             },
-#             {
-#                 "role": "user",
-#                 "content": prompt
-#             }
-#         ]
-#     )
-
-#     filtered_comments = response['choices'][0]['message']['content'].strip()
-#     filtered_comments_list = filtered_comments.split('\n')
-
-#     print(filtered_comments_list)
+    return filtered_posts

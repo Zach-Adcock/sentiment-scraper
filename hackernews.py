@@ -34,6 +34,3 @@ def fetch_hackernews_posts(keyword):
     else:
         print(f"Error: {response}")
         return []
-
-
-# pprint.pprint(fetch_hackernews_posts("microsoft"))

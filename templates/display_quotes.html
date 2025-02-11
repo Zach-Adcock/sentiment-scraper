@@ -19,12 +19,13 @@
     <!-- Reddit Section -->
     {% if "reddit" in sites %}
         <section class="container">
-        <h1>Here are your returned reddit quotes:</h1>
+        <!-- <h1>Here are your returned reddit quotes:</h1> -->
         {% if reddit_quotes %}
             <div class="quotes-list">
                 {% for quote in reddit_quotes %}
                     <div class="quote">
-                        <p>"{{ quote }}"</p>
+                        <p>"{{ quote['comment'] }}"</p>
+                        <a href="{{ quote['url'] }}" target="_blank">View Reddit Submission</a>
                     </div>
                 {% endfor %}
             </div>
@@ -41,9 +42,9 @@
         <div class="quotes-list">
                 {% for post in stack_overflow_posts %}
                     <div class="quote">
-                        <p class="post-title"><strong>Article: {{ post["post_title"]|trim }}</strong></p>
+                        <p class="post-title"><strong>Article: {{ post["title"]|trim }}</strong></p>
                         <!-- <p>{{ post["excerpt"] }}</p> -->
-                        <a href="{{ post['post_url'] }}" target="_blank">View StackOverflow Post</a>
+                        <a href="{{ post['url'] }}" target="_blank">View StackOverflow Post</a>
                     </div>
                 {% endfor %}
             </div>
@@ -54,11 +55,11 @@
 
 
         <!-- Hackernews Posts -->
-    {% if "stack_overflow" in sites %}
-        {% if fetch_hackernews_posts %}
+    {% if "hackernews" in sites %}
+        {% if hackernews_articles %}
         <h2>Hackernews Articles</h2>
         <div class="quotes-list">
-            {% for post in fetch_hackernews_posts %}
+            {% for post in hackernews_articles %}
                 <div class="quote">
                     <p class="post-title"><strong>{{ post["title"]|trim }}</strong></p>
                     <!-- <p>{{ post["excerpt"] }}</p> -->
